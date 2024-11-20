@@ -1,26 +1,13 @@
-> [!IMPORTANT]
-> ATTENTION TESTERS
->
-> To speed up testing, you can copy and paste code blocks from instructions on GitHub.
-> Open a browser in the VM and type ++https://github.com/BobGerman/Ignite24-Labs/blob/main/LAB-445/instructions.md++ into the address bar.
+# Lab 445 - Build declarative agents for Microsoft 365 Copilot
 
-@lab.Title
+## Requirements
 
-Use this account to log into Windows:
+- Microsoft 365 tenant with Microsoft 365 Copilot enabled and custom app upload enabled
+- Visual Studio Code
+- Teams Toolkit extension
+- SharePoint site with [documents](./docs) uploaded to Documents library
 
-**Username: ++@lab.VirtualMachine(Win11-Pro-Base-VM).Username++**
-
-**Password: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Password+++** 
-
-<br>
-
-Use this account to log into Microsoft 365:
-
-**Username: +++@lab.CloudPortalCredential(User1).Username+++**
-
-**Password: +++@lab.CloudPortalCredential(User1).Password+++**
-
-# Lab 445 - Build Declarative Agents for Microsoft 365 Copilot
+## Overview
 
 In this lab you will build a declarative agent that assists employees of a fictitous consulting company called Trey Research. Like all declarative agents, this will use the AI model's and orchestration that's built into Microsoft 365 to provide a specialized Copilot experience that focuses on information about consultants, billing, and projects.
 
@@ -51,19 +38,13 @@ Continuing in the new window:
 1. On the **Activity Bar**, select the **Teams Toolkit icon** 1️⃣.
 1. Under **Accounts**, select **Sign in to Microsoft 365** 2️⃣. A browser window is opened.
 
-!IMAGE[01-04-Setup-TTK-01.png](instructions276847/01-04-Setup-TTK-01.png)
-
 Continuing in the web browser:
 
-- Sign in using a "Work and School" account; as a reminder here are your login credentials for the lab tenant:
-    - **Username**: +++@lab.CloudPortalCredential(User1).Username+++
-    - **Password**: +++@lab.CloudPortalCredential(User1).Password+++
+- Sign in using a "Work and School" account
 
 Continuing in Visual Studio Code:
 
 - Ensure that **Custom app upload enabled** and **Copilot access enabled** appear with a green checkbox before continuing.
-
-!IMAGE[run-in-ttk01.png](instructions276847/run-in-ttk01.png)
 
 ### Step 2: Set up the local environment files
 
@@ -74,20 +55,11 @@ Continuing in Visual Studio Code:
 
 - Start a new debug session, press <kbd>F5</kbd> on your keyboard.
 
-
-<!-- Press F5 or hover over the "local" environment and click the debugger symbol that will be displayed 1️⃣ and then select "debug in Microsft Edge" 2️⃣.
-
-!IMAGE[run-in-ttk02.png](instructions276847/run-in-ttk02.png) -->
-
 It will take a while. If you get an error about not being able to run the "Ensure database" script, please try a 2nd time as this is a timing issue waiting for the Azure storage emulator to run for the first time.
 
 The Edge browser should open to the Copilot "Bizchat" page.
 
-If you are prompted to log in, choose "work and school" account and use these credentials:
-
-**Username: +++@lab.CloudPortalCredential(User1).Username+++**
-
-**Password: +++@lab.CloudPortalCredential(User1).Password+++**
+If you are prompted to log in, choose "work and school" account and use your Microsoft 365 acccount credentials:
 
 Minimize the browser so you can test the API locally. (Don't close the browser or you will exit the debug session!)
 
@@ -97,30 +69,24 @@ Before proceeding, ensure the log file is in view by opening the "Debug console"
 
 Now click the "Send Request" link in treyResearchAAPI.http just above the link {{base_url}}/me 6️⃣.
 
-!IMAGE[run-in-ttk04.png](instructions276847/run-in-ttk04.png)
-
 You should see the response in the right panel, and a log of the request in the bottom panel. The response shows the information about the logged-in user, but since we haven't implemented authentication as yet (that's coming in Lab 6), the app will return information on the fictitious consultant "Avery Howard". Take a moment to scroll through the response to see details about Avery, including a list of project assignments.
-
-!IMAGE[run-in-ttk05.png](instructions276847/run-in-ttk05.png)
 
 Try some more API calls to familiarize yourself with the API and the data.
 
 ### Step 4: Run the solution in Copilot
 
-Now restore the browser window you minimized in Step 3. You should see the Microsoft 365 Copilot window. If you need to navigate there, the URL is [https://www.microsoft365.com/chat/?auth=2](https://www.microsoft365.com/chat/?auth=2).
+Now restore the browser window you minimized in Step 3. You should see the Microsoft 365 Copilot window. If you need to navigate there, the URL is **https://www.microsoft365.com/chat/?auth=2**.
 
 Open the right flyout 1️⃣ and, if necessary, click "Show more"2️⃣ to reveal all the choices. Then choose "Trey Genie local"3️⃣, which is the agent you just installed.
-
-!IMAGE[run-declarative-copilot-01.png](instructions276847/run-declarative-copilot-01.png)
 
 Try one of the prompt suggestions such as, "Find consultants with TypeScript skills." You should see two consultants, Avery Howard and Sanjay Puranik, with additional details from the database.
 
 Your log file should reflect the request that Copilot made. You might want to try some other prompts, clicking "New Chat" in between to clear the conversation context. Here are some ideas:
 
- * "Find consultants who are Azure certified and available immediately" (this will cause Copilot to use two query string parameters)
- * "What projects am I assigned to?" (this will return information about Avery Howard who is "me" since we haven't implemented authentication)
- * "Charge 3 hours to the Woodgrove project" (this will cause a POST request, and the user will need to confirm before it will udpate the data)
- * "How many hours have I billed to Woodgrove" (this will demonstrate if the hours were updated in the database)
+ * **Find consultants who are Azure certified and available immediately** (this will cause Copilot to use two query string parameters)
+ * **What projects am I assigned to?** (this will return information about Avery Howard who is "me" since we haven't implemented authentication)
+ * **Charge 3 hours to the Woodgrove project** (this will cause a POST request, and the user will need to confirm before it will udpate the data)
+ * **How many hours have I billed to Woodgrove** (this will demonstrate if the hours were updated in the database)
 
  ## Exercise 2: Add instructions and SharePoint files
 
@@ -128,29 +94,23 @@ Your log file should reflect the request that Copilot made. You might want to tr
  
 ### Step 1: Add instructions
 
-Open in the **appPackage** folder open **trey-declarative-agent.json**. Add some text to the `"instructions"` value, staying on one line and between the quotation marks:
+Open in the **appPackage** folder open **trey-declarative-agent.json**. Add some text to the **instructions** value, staying on one line and between the quotation marks:
 
-~~~text
+~~~
 Be sure to remind users of the Trey motto, 'Always be Billing!'.
 ~~~
 
-### Step 2: Inspect the SharePoint site
+### Step 4: Add the SharePoint capability
 
-In a web browser, open the site https://lodsprodmca.sharepoint.com/sites/TreyLegalDocuments. You may need to log in again. When you see the site home page, click on "Documents" to view the Trey Research legal documents. Notice that it contains contracts for two consulting engagements, Bellows College and Woodgrove Bank.
+Now return to the **trey-declarative-agent.json** file and add these lines just above the **actions** property, replacing the URL property with the URL of your SharePoint site:
 
-!IMAGE[sharepoint-docs.png](instructions276847/sharepoint-docs.png)
-
-### Step 3: Add the SharePoint capability
-
-Now return to the **trey-declarative-agent.json** file and add these lines just above the `"actions"` property:
-
-~~~json
+~~~
 "capabilities": [
     {
         "name": "OneDriveAndSharePoint",
         "items_by_url": [
             {
-                "url": "https://lodsprodmca.sharepoint.com/sites/TreyLegalDocuments"
+                "url": "https://tenant.sharepoint.com/sites/TreyLegalDocuments"
             }
         ]
     }
@@ -159,7 +119,7 @@ Now return to the **trey-declarative-agent.json** file and add these lines just 
 
 The final **trey-declarative-agent.json** file should look like this:
 
-~~~json
+~~~
 {
     "$schema": "https://aka.ms/json-schemas/copilot-extensions/vNext/declarative-copilot.schema.json",
     "version": "v1.0",
@@ -185,7 +145,7 @@ The final **trey-declarative-agent.json** file should look like this:
             "name": "OneDriveAndSharePoint",
             "items_by_url": [
                 {
-                    "url": "https://lodsprodmca.sharepoint.com/sites/TreyLegalDocuments"
+                    "url": "https://tenant.sharepoint.com/sites/TreyLegalDocuments"
                 }
             ]
         }
@@ -199,39 +159,36 @@ The final **trey-declarative-agent.json** file should look like this:
 }
 ~~~
 
-NOTE: The completed solution can be found in C:\Users\LabUser\TeamsApps\LAB-445-END on your workstation if you want to copy or compare with the final source code.
+#### Step W: Provision a new version of the declarative agent
 
-#### Step W: Workaround for issue updating DA's with SharePoint URL's
+Let's create a new version of the declarative agent, so we can test the new capabilities.
 
-By the time you do this lab, this might be unnecessary, but at the time of this writing there is a platform bug where updates to Declarative Agents containing SharePoint capabilities do not take effect in a timely manner. To work around this, you can simply create a new application instead of updating the old one.
+First, in Visual Studio Code open the **env** folder and delete **.env.local** file. This will force Teams Toolkit to make a new application.
 
-First, in Visual Studio code open the **env\\.env.dev** file and delete everything. This will force Teams Toolkit to make a new application.
-
-Second, in your **declarativeAgent.json** file, add a number to the name such as "Product Support 2", as you will see two copies of the agent in Copilot. Then test by clicking on the one with a new name.
+Second, in your **trey-declarative-agent.json** file, add a number to the name such as "Trey Genie 2", as you will see another copy of the agent in Copilot. Then test by clicking on the one with a new name.
 
 ### Step 4: Test in Copilot
 
-Now press F5 or the arrow button to start the debugger again. 
+Now press F5 or the arrow button to start the debugger again. In case BizChat doesn't open, copy the following link in the browser: **https://www.microsoft365.com/chat/?auth=2**.
 
 > NOTE: If the debugger does not start after a few minutes, close Visual Studio Code and open it again. There is a race condition when starting the database a second time in the same VS Code session; it is harmless except requring restarting VS Code from time to time.
 
-Return to the "Trey Genie local" screen and test it again.
+Find the "Trey Genie 2" in Copilot and test with the prompt below:
 
-Try the prompt:
 
-* "What is the status of the Woodgrove project, and what are the project phases?" (The project phases should come from the statement of work in SharePoint)
+* **"What is the status of the Woodgrove project?"** (The project phases should come from the statement of work in SharePoint)
 
 In addition to including information from the statement of work, Copilot should include the Trey motto, "always be billing."
 
 ## Exercise 3: Add project API
 
-So far, Trey Genie only knows about projects that are assigned to specific consultants. You may notice it is using the `/consultants` or `/me` paths to answer your questions. In this exercise you will add a new path to the Trey Research API, `/projects`. This will allow the declarative agent to answer more project related questions, and will give you a chance to learn about the packaging for an API plugin.
+So far, Trey Genie only knows about projects that are assigned to specific consultants. You may notice it is using the **/consultants** or **/me** paths to answer your questions. In this exercise you will add a new path to the Trey Research API, **/projects**. This will allow the declarative agent to answer more project related questions, and will give you a chance to learn about the packaging for an API plugin.
 
 ### Step 1: Add an Azure function endpoint for /projects
 
 Create a new file, **projects.ts**, within the **/src/functions** folder, and copy this code into the new file:
 
-~~~typescript
+~~~
 /* This code sample provides a starter kit to implement server side logic for your Teams App in TypeScript,
  * refer to https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference for complete Azure Functions
  * developer guide.
@@ -388,13 +345,13 @@ app.http("projects", {
 });
 ~~~
 
-This will add the `/projects` requests to your Azure function using database code that was already in place.
+This will add the **/projects** requests to your Azure function using database code that was already in place.
 
 ### Step 2: Add /projects to the HTTP test file
 
-Edit the **/http/treyResearchAPI.http** file and add these lines after the existing contents of the file:
+Edit the **/http/treyResearchAPI.http** file and add these lines at the bottom of file:
 
-~~~text
+~~~
 
 ########## /api/projects - working with projects ##########
 
@@ -426,9 +383,11 @@ Content-Type: application/json
 
 Open the file **/appPackage/trey-definition.json**. This file documents the Trey Research API using the Open API Specification (OAS) format. This is often referred to as a "Swagger" file because OAS documents used to be called Swagger files.
 
-Find the line that contains `"/me/chargeTime": {` and add these lines before it:
+Let's add a new endpoint to the API specification. The code snippet below makes a **GET** request for the **/projects** path, including query string parameters for **consultantName** and **projectName**.
 
-~~~json
+Find **"paths": {** array and copy these lines inside the array right after **"paths": {** line:
+
+~~~
 "/projects/": {
     "get": {
         "operationId": "getProjects",
@@ -537,11 +496,11 @@ Find the line that contains `"/me/chargeTime": {` and add these lines before it:
 },
 ~~~
 
-This documents `GET` requests using the `/projects` path, including query string parameters for `"consultantName"` and `"projectName"`.
+Let's add another endpoint to the API specification. The code snippet below makes a **POST** request for the **/projects/assignConsultant** path. 
 
-Now at the end of the same file, add these lines:
+Now add these lines inside the same **"paths": {** array:
 
-~~~json
+~~~
 "/projects/assignConsultant": {
     "post": {
         "operationId": "postAssignConsultant",
@@ -621,22 +580,17 @@ Now at the end of the same file, add these lines:
 }
 ~~~
 
-Be sure to check your nesting on the brackets as it gets a little tricky with large JSON files! For your reference the finished file is at **C:\Users\LabUser\TeamsApps\Lab-445-Completed\appPackage\trey-definition.json**.
+Be sure to check your nesting on the brackets as it gets a little tricky with large JSON files!
 
 ### Step 4: Add the projects information to your API plugin file
 
-The API plugin file contains additional information about your API that isn't included in the OAS (swagger) standard. Here we will add two "functions" - not Azure functions, but API functions, one for the `/projects` GET request and another for the POST.
+The API plugin file contains additional information about your API that isn't included in the OAS (swagger) standard. Here we will add two "functions" - API functions, one for the **/projects** GET request and another for the POST.
 
-Open your **appPackage/trey-plugin.json** file. Just before these lines:
+Open your **appPackage/trey-plugin.json** file and find **"functions": [** line.
 
-~~~json
-{
-    "name": "postBillhours",
+Insert the GET request function for **/projects** right after **"functions":[** line:
+
 ~~~
-
-insert the GET request for `/projects`:
-
-~~~json
 {
     "name": "getProjects",
     "description": "Returns detailed information about projects matching the specified project name and/or consultant name",
@@ -833,18 +787,11 @@ insert the GET request for `/projects`:
 },
 ~~~
 
-Notice that in addition to the name and description, this includes `"response_semantics"` which tell Copilot the most important parts of your API response. It also includes a `"static_template"` which is an adaptive card which data binds to the HTTP response body to display project details.
+Notice that in addition to the name and description, this includes **"response_semantics"** which tell Copilot the most important parts of your API response. It also includes a **"static_template"** which is an adaptive card which data binds to the HTTP response body to display project details.
 
-Now find the lines:
+Now add another function after **"functions":[** line for the Post request function for **projects/assignConsultant**:
 
-~~~json
-],
-"runtimes": [
 ~~~
-
-Paste this above the closing bracket, including the comma which closes the `"chargeTime"` function:
-
-~~~json
 ,
 {
     "name": "postAssignConsultant",
@@ -963,15 +910,28 @@ Paste this above the closing bracket, including the comma which closes the `"cha
 }
 ~~~
 
+Find **"run_for_functions": [** and update it by adding the new functions **postAssignConsultant** and **getProjects**. The final version of "run_for_functions" should look like below:
+
+~~~
+"run_for_functions": [       
+     "getConsultants",        
+     "getUserInformation",        
+     "postBillhours",
+     "postAssignConsultant",
+     "getProjects"   
+]
+~~~
+
+
 Again, please double check your nesting and commas as editing large JSON files can be tricky! The correctly modified file is on your lab workstation in **C:\Users\LabUser\TeamsApps\Lab-445-Completed\appPackage/trey-plugin.json**.
 
-#### Step W: Workaround for issue updating DA's with SharePoint URL'sfor issue updating DA's with SharePoint URL's
+#### Step W: Provision a new version of the declarative agent
 
-By the time you do this lab, this might be unnecessary, but at the time of this writing there is a platform bug where updates to Declarative Agents containing SharePoint capabilities do not take effect in a timely manner. To work around this, you can simply create a new application instead of updating the old one.
+Let's create a new version of the declarative agent, so we can test the new capabilities.
 
-First, in Visual Studio code open the **env\\.env.local** file and delete everything. This will force Teams Toolkit to make a new application.
+First, in Visual Studio Code open the **env** folder and delete **.env.local** file. This will force Teams Toolkit to make a new application.
 
-Second, in your **declarativeAgent.json** file, add a number to the name such as "Product Support 2", as you will see two copies of the agent in Copilot. Then test by clicking on the one with a new name.
+Second, in your **trey-declarative-agent.json** file, add a number to the name such as "Trey Genie 3", as you will see another copy of the agent in Copilot. Then test by clicking on the one with a new name.
 
 ### Step 5: Test the API
 
@@ -980,7 +940,7 @@ Now restart the debugger. Although the code is updated automatically, you need t
 Once it has started, verify that the new API paths are working by minimizing (not closing) the browser and opening the **http/treyResearchAPI.http** file. 
 This time try sending the GET request for all projects.
 
-~~~text
+~~~
 ### Get all projects
 {{base_url}}/projects
 ~~~
@@ -989,12 +949,12 @@ You should get back ten projects.
 
 ### Step 6: Test the updated declarative agent in Copilot
 
-With the debugger still running, restore your debug browser session. Open Copilot and the Trey Genie declarative agent.
+With the debugger still running, restore your debug browser session. Open Copilot and the "Trey Genie 3" declarative agent.
 Here are a couple of prompts to try:
 
-* +++What projects is Trey Resarch working on now?+++ (should return all the projects)
-* +++Please add Domi as a designer on the Contoso project. Forecast 30 hours for her work.+++ (should show a confirmation card, then add Domi to the project)
-* +++What projects is Domi working on?+++ (should now include the Contoso project).
+* **What projects is Trey Resarch working on now?** (should return all the projects)
+* **Please add Domi as a designer on the Contoso project. Forecast 30 hours for her work.** (should show a confirmation card, then add Domi to the project)
+* **What projects is Domi working on?** (should now include the Contoso project).
 
 # Congratulations!
 
