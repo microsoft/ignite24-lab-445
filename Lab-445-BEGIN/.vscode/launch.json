@@ -5,7 +5,7 @@
             "name": "Launch App in Teams (Edge)",
             "type": "msedge",
             "request": "launch",
-            "url": "https://teams.microsoft.com?${account-hint}",
+            "url": "https://www.microsoft365.com/chat",
             "cascadeTerminateToConfigurations": [
                 "Attach to Backend"
             ],
@@ -20,7 +20,7 @@
             "name": "Launch App in Teams (Chrome)",
             "type": "chrome",
             "request": "launch",
-            "url": "https://teams.microsoft.com?${account-hint}",
+            "url": "https://www.microsoft365.com/chat",
             "cascadeTerminateToConfigurations": [
                 "Attach to Backend"
             ],
@@ -35,7 +35,7 @@
             "name": "Preview in Copilot (Edge)",
             "type": "msedge",
             "request": "launch",
-            "url": "https://teams.microsoft.com?${account-hint}",
+            "url": "https://www.microsoft365.com/chat",
             "presentation": {
                 "group": "remote",
                 "order": 1
@@ -47,7 +47,7 @@
             "name": "Preview in Copilot (Chrome)",
             "type": "chrome",
             "request": "launch",
-            "url": "https://teams.microsoft.com?${account-hint}",
+            "url": "https://www.microsoft365.com/chat",
             "presentation": {
                 "group": "remote",
                 "order": 2
